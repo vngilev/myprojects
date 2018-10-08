@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS ingredients (
 DROP TABLE IF EXISTS role;
 CREATE TABLE IF NOT EXISTS role (
   id INTEGER (18) NOT NUIF NOT EXISTSLL AUTO_INCREMENT PRIMARY KEY ,
-  role VARCHAR(255) default NULL
+  rolename VARCHAR(255) default NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS user;
@@ -51,11 +51,3 @@ CREATE TABLE IF NOT EXISTS user_role (
   CONSTRAINT role_userrole FOREIGN KEY (role_id) REFERENCES role (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS persistent_logins;
-CREATE TABLE IF NOT EXISTS persistent_logins (
-  username varchar(64) NOT NULL,
-  series varchar(64) NOT NULL,
-  token varchar(64) NOT NULL,
-  last_used timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (series)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

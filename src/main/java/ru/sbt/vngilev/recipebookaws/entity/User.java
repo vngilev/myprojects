@@ -1,29 +1,39 @@
 package ru.sbt.vngilev.recipebookaws.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "FIRSTNAME")
+    @Column(name = "firstname")
     private String firstname;
 
-    @Column(name = "LASTNAME")
+    @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "LOGIN")
-    private String login;
-
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "active")
+    private Integer active;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private List<Role> roles = new ArrayList<Role>();
+
 
     public Long getId() {
         return id;
@@ -49,14 +59,6 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -72,4 +74,41 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getFirstname(), user.getFirstname()) &&
+                Objects.equals(getLastname(), user.getLastname()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getActive(), user.getActive());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstname(), getLastname(), getEmail(), getPassword(), getActive());
+    }
+
+
+
 }
