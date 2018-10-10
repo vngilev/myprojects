@@ -27,6 +27,7 @@ public class Ingredient implements Serializable {
     public Ingredient() {
     }
 
+
     public Ingredient(Long id, Recipe recipe, Foodstuff foodstuff, BigDecimal quantity) {
         this.id = id;
         this.recipe = recipe;
@@ -66,4 +67,13 @@ public class Ingredient implements Serializable {
         this.quantity = quantity;
     }
 
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", recipe=" + recipe +
+                ", foodstuff=" + foodstuff +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
